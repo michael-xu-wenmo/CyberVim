@@ -2,8 +2,13 @@
 require("config.lazy") -- setup package manager
 require("config.options") -- setup options
 require("config.line_formating")
-require("config.aesthetics") -- colorscheme
-require("config.fuzzy") -- fuzzy finder
+require("config.catppuccine") -- colorscheme
+require("config.telescope") -- fuzzy finder
+require("config.treesitter") -- treesitter
+
+-- Startup --
+require("startup.startup") -- startup 
 
 -- Remaps --
-require("remaps.fuzzy")
+require("remaps.navigation")
+require("remaps.telescope")
