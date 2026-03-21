@@ -1,0 +1,70 @@
+# =========================
+# OS / System files
+# =========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# =========================
+# Editor / IDE
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+Session.vim
+
+# =========================
+# Neovim cache & state
+# =========================
+# General temp/cache/log files
+.cache/
+tmp/
+log/
+*.log
+*.tmp
+
+# Swap, undo, backup
+*.swp
+*.un~
+*.bak
+
+# =========================
+# lazy.nvim
+# =========================
+# Keep lockfile for reproducibility
+# lazy-lock.json  <-- intentionally NOT ignored
+
+# If plugins accidentally end up inside repo
+lazy/
+
+# =========================
+# Treesitter / LSP / Mason
+# =========================
+parser/
+mason/
+mason/bin/
+mason/packages/
+lsp.log
+
+# =========================
+# Language-specific (optional)
+# =========================
+
+# Python
+__pycache__/
+*.pyc
+
+# Node (only if you use node-based tooling in config)
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# =========================
+# Secrets
+# =========================
+.env
+.env.*
+secrets.json
