@@ -10,3 +10,7 @@ vim.keymap.set('n', '<C-l>', '<C-w>l', { noremap = true })
 -- Auto center when jump
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true})
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true})
+
+-- Go to Home Page --
+local startup = require("startup")
+vim.keymap.set("n", "<leader>uS", vim.cmd.restart, { desc = "Open mini starter" })
