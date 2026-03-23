@@ -1,6 +1,4 @@
 local function get_python()
-  local cwd = vim.fn.getcwd()
-
   local candidates = {
     ".venv/bin/python",
     "venv/bin/python",
@@ -19,6 +17,7 @@ vim.keymap.set("n", "<leader>r", function()
 
 --python
   if vim.bo.filetype == "python" then
+	vim.cmd("write")
   	local file = vim.fn.expand("%:p")
   	local python = get_python()
 
