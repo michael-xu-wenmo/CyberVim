@@ -9,6 +9,7 @@ require("config.lsp") -- lsp
 require("config.cmp") -- code completion
 require("config.null-ls")
 require("config.toggleterm")
+require("config.git") -- git stuff
 
 -- Startup --
 require("startup.startup") -- startup 
