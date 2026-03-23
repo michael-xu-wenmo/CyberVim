@@ -1,3 +1,6 @@
+local ascii_arts = {"startup.ascii_art.rebecca","startup.ascii_art.lucy","startup.ascii_art.face"}
+math.randomseed(os.time())
+
 local settings = {
     header = {
         type = "text",
@@ -5,7 +8,7 @@ local settings = {
         fold_section = false,
         title = "Header",
         margin = 5,
-        content = require("startup.ascii_art.face"),
+        content = require(ascii_arts[math.random(#ascii_arts)]),
         highlight = "Statement",
         default_color = "",
         oldfiles_amount = 0,

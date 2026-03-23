@@ -1,3 +1,8 @@
+local mason_config = require("plugins.lsp")
+local on_attach = mason_config.on_attach
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+-- Lua
 local lua_config = {
   settings = {
     Lua = {
@@ -16,20 +21,67 @@ local lua_config = {
 
 vim.lsp.config('lua_ls', lua_config)
 
+-- Python
+local function get_python_path()
+
+	local function exists(file)
+   		local ok, err, code = os.rename(file, file)
+   		if not ok then
+      		if code == 13 then
+         		return true
+      		end
+		end
+		return ok, err
+	end
+
+  	if exists(".venv/") then
+		return ".venv/bin/python3"
+  	else
+    	return "/usr/bin/python3"
+  	end
+end
+
 local python_config = {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	filetypes = {"python"},
+	before_init = function(_, config)
+    	config.settings.python.pythonPath = get_python_path()
+	end,
 	settings = {
-        basedpyright = {
-            analysis = {
-                typeCheckingMode = "standard", -- "off", "basic", or "standard"
-            },
-        },
+    	python = {
+      		analysis = {
+        		autoSearchPaths = true,
+        		useLibraryCodeForTypes = true,
+        		typeCheckingMode = "basic", -- or "strict"	
+    		},
+			pythonPath
+      	},
     },
-    -- You can add an on_attach function here for keymaps, etc.
-    on_attach = function(client, bufnr)
-        -- Keymaps (example)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, desc = 'Go to definition' })
-        -- ... other keymaps
-    end,
 }
 
-vim.lsp.config('pylsp', python_config)
+vim.lsp.config("pyright", python_config)
+
+local ruff_config = {
+  capabilities = capabilities,
+  init_options = {
+    settings = {
+      args = {}, -- you can customize later
+    },
+  },
+}
+
+local mypy_config = {
+  capabilities = capabilities,
+}
+
+vim.lsp.config("ruff",ruff_config)
+vim.lsp.config("mypy",mypy_config)
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.py",
+  callback = function()
+    vim.lsp.buf.format({ async = false })
+  end,
+})
+
