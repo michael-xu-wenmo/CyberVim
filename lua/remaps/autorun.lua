@@ -40,12 +40,15 @@ function()
 		vim.cmd("write")
 		local Terminal = require("toggleterm.terminal")
 		local term = Terminal.get(1)
+
 		if not term then
 			vim.cmd("ToggleTerm")
 			term = Terminal.get(1)
 		end
+
 		term:open()
-		local cmd = "cargo run"
+
+		local cmd = "cargo run\n"
 		vim.fn.chansend(term.job_id, cmd)
 
 	else
