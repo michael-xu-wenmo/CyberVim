@@ -10,6 +10,7 @@ require("config.cmp") -- code completion
 require("config.null-ls")
 require("config.toggleterm")
 require("config.git") -- git stuff
+require("config.rust") -- rust stuff
 
 -- Startup --
 require("startup.startup") -- startup 

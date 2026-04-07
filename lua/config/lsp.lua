@@ -55,7 +55,6 @@ local python_config = {
         		useLibraryCodeForTypes = true,
         		typeCheckingMode = "basic", -- or "strict"	
     		},
-			pythonPath
       	},
     },
 }
@@ -85,3 +84,22 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
+-- Rust
+local rust_config = {
+	settings = {
+        ['rust-analyzer'] = {
+            checkOnSave = {
+                command = "clippy", -- Use clippy for enhanced diagnostics
+                allTargets = true,
+            },
+            inlayHints = {
+                bindingModeHints = { enable = true },
+                closureCaptureHints = { enable = true },
+                closureReturnTypeHints = { enable = "always" },
+            },
+            -- Other settings can be added here
+        }
+	}
+}
+
+vim.lsp.config("rust-analyzer",rust_config)

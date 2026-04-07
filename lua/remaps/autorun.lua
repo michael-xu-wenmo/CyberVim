@@ -13,31 +13,44 @@ local function get_python()
   return "python3" -- fallback
 end
 
-vim.keymap.set("n", "<leader>r", function()
 
---python
-  if vim.bo.filetype == "python" then
-	vim.cmd("write")
-  	local file = vim.fn.expand("%:p")
-  	local python = get_python()
+vim.keymap.set("n", "<leader>r",
+function()
+	--python
+	if vim.bo.filetype == "python" then
+		vim.cmd("write")
+	  	local file = vim.fn.expand("%:p")
+	  	local python = get_python()
 
-  	local Terminal = require("toggleterm.terminal")
-  	local term = Terminal.get(1)
+	  	local Terminal = require("toggleterm.terminal")
+	  	local term = Terminal.get(1)
 
-  	if not term then
-  	  vim.cmd("ToggleTerm") -- create it
-  	  term = Terminal.get(1)
-  	end
+	  	if not term then
+	  		vim.cmd("ToggleTerm") -- create it
+	  	  	term = Terminal.get(1)
+		end
 
-  	term:open()
+	  	term:open()
 
-  	-- run
-  	local cmd =  python .. " " .. vim.fn.shellescape(file) .. "\n"
-  	vim.fn.chansend(term.job_id, cmd)
+	  	-- run
+	  	local cmd =  python .. " " .. vim.fn.shellescape(file) .. "\n"
+	  	vim.fn.chansend(term.job_id, cmd)
 
-  else
-	print("Auto run not configured yet for filetype "..vim.bo.filetype)
-	return
-  end
+	elseif vim.bo.filetype == "rust" then
+		vim.cmd("write")
+		local Terminal = require("toggleterm.terminal")
+		local term = Terminal.get(1)
+		if not term then
+			vim.cmd("ToggleTerm")
+			term = Terminal.get(1)
+		end
+		term:open()
+		local cmd = "cargo run"
+		vim.fn.chansend(term.job_id, cmd)
+
+	else
+		print("Auto run not configured yet for filetype "..vim.bo.filetype)
+
+	end -- end of the language check if statements
 
 end, { desc = "Run file" })
