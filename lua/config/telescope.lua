@@ -1,5 +1,7 @@
 require('telescope').setup{
   defaults = {
+	  preview = {
+	  },
     -- Default configuration for telescope goes here:
     -- config_key = value,
     mappings = {

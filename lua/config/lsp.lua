@@ -1,5 +1,5 @@
-local mason_config = require("plugins.lsp")
-local on_attach = mason_config.on_attach
+--local mason_config = require("plugins.lsp")
+--local on_attach = mason_config.on_attach
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- Lua
@@ -22,44 +22,31 @@ local lua_config = {
 vim.lsp.config('lua_ls', lua_config)
 
 -- Python
-local function get_python_path()
-
-	local function exists(file)
-   		local ok, err, code = os.rename(file, file)
-   		if not ok then
-      		if code == 13 then
-         		return true
-      		end
-		end
-		return ok, err
-	end
-
-  	if exists(".venv/") then
-		return ".venv/bin/python3"
-  	else
-    	return "/usr/bin/python3"
-  	end
-end
-
 local python_config = {
-	on_attach = on_attach,
+	on_attach = function(client, bufnr)
+		if client.server_capabilities.semanticTokensProvider then
+      		client.server_capabilities.semanticTokensProvider = {
+        	full = true,
+        	legend = client.server_capabilities.semanticTokensProvider.legend,
+      		}
+    	end
+  	end,
+
 	capabilities = capabilities,
 	filetypes = {"python"},
-	before_init = function(_, config)
-    	config.settings.python.pythonPath = get_python_path()
-	end,
 	settings = {
-    	python = {
+    	basedpyright = {
       		analysis = {
         		autoSearchPaths = true,
         		useLibraryCodeForTypes = true,
-        		typeCheckingMode = "basic", -- or "strict"	
+        		typeCheckingMode = "standard", -- or "strict"	
     		},
       	},
     },
 }
 
-vim.lsp.config("pyright", python_config)
+vim.lsp.config("basedpyright", python_config)
+vim.lsp.enable("basedpyright")
 
 local ruff_config = {
   capabilities = capabilities,
